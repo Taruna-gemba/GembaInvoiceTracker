@@ -2,7 +2,7 @@ import React from 'react';
 
 function header() {
     return (
-        <div className="flex bg-orange-400 h-36 items-center">
+        <div className="flex bg-orange-400 h-36 items-center ">
            <div className="text-4xl font-bold flex-1 ml-10 mt-4">
               <h1 >GEMBA</h1>
             </div> 
