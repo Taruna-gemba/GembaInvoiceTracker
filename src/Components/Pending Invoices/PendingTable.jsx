@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 
-const PendingTable = ({ invoices = [] }) => { // Ensure invoices defaults to an array
+const PendingTable = ({ invoices = [] }) => { 
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
   // Ensure invoices is always an array before filtering
