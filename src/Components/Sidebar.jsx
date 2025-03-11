@@ -5,7 +5,7 @@ import { faTachometerAlt, faFileInvoice, faPlusSquare } from '@fortawesome/free-
 
 const Sidebar = () => {
   const linkClass = ({ isActive }) =>
-    `flex items-center space-x-3 p-4 rounded-lg transition-colors duration-200 font-semibold ${isActive ? 'bg-blue-500 text-white' : 'text-white hover:bg-blue-100'}`;
+    `flex items-center space-x-3 rounded-lg transition-colors duration-200 font-semibold ${isActive ? 'bg-orange-400 text-white m-4 p-2' : 'text-white hover:bg-orange-200 m-4 p-2'}`;
 
   return (
     <div className="w-64 h-screen bg-fuchsia-700 shadow-lg">

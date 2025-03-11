@@ -16,7 +16,7 @@ function NewBill() {
         <div className="h-auto bg-fuchsia-200">
             <h1 className="text-2xl p-4">Add New Invoices</h1>
             <br></br>
-            <form class="max-w-4xl mx-auto bg-white p-8 rounded-sm shadow-lg border-t-6 border-fuchsia-700">
+            <form class="max-w-4xl mx-auto bg-white p-8 rounded-sm shadow-lg border-t-4 border-fuchsia-700 overflow-y-auto h-96">
   <div class="grid grid-cols-1 gap-4">
     <div>
       <label class="block text-sm font-medium text-gray-700">Vendor Type <span class="text-red-500">*</span> <span class="text-gray-500" title="Required field">ℹ️</span></label>
@@ -105,6 +105,10 @@ function NewBill() {
     <button type="button" class="px-4 py-2 bg-gray-300 text-black rounded-lg hover:bg-gray-400">Cancel</button>
   </div>
 </form>
+     <footer className="fixed bottom-0 w-full bg-white text-gray-600 text-base p-4">
+        <span className="font-bold">Copyright © 2025.</span> All rights reserved.
+      </footer>
+
 </div>
 
 
