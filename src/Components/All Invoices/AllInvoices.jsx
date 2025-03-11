@@ -1,15 +1,62 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AllInvoicesTable from "./AllInvoicesTable.jsx";
 
 function AllInvoices() {
   const [entries, setEntries] = useState(10);
   const [search, setSearch] = useState("");
+  const [invoices, setInvoices] = useState([]);
+  const [filteredInvoices, setFilteredInvoices] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Handle dropdown changes
+  // Fetch data from API
+  useEffect(() => {
+    const fetchInvoices = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/api/invoices"); // Replace with actual API
+        const data = await response.json();
+
+        console.log("Fetched Invoices:", data); // Debugging: Check API response
+
+        const invoiceList = Array.isArray(data) ? data : data.data || [];
+        setInvoices(invoiceList);
+        setFilteredInvoices(invoiceList);
+      } catch (error) {
+        console.error("Error fetching invoices:", error);
+      }
+    };
+    fetchInvoices();
+  }, []);
+
+  // Handle dropdown changes for entries per page
   const handleEntriesChange = (e) => {
     const value = e.target.value === "all" ? "all" : Number(e.target.value);
     setEntries(value);
+    setCurrentPage(1);
   };
+
+  // Handle search filtering
+  useEffect(() => {
+    const filtered = invoices.filter((invoice) =>
+      Object.values(invoice).some(
+        (val) =>
+          val &&
+          typeof val === "string" &&
+          val.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+    setFilteredInvoices(filtered);
+    setCurrentPage(1);
+  }, [search, invoices]);
+
+  // Pagination logic
+  const indexOfLastEntry = currentPage * entries;
+  const indexOfFirstEntry = indexOfLastEntry - entries;
+  const currentEntries =
+    entries === "all"
+      ? filteredInvoices
+      : filteredInvoices.slice(indexOfFirstEntry, indexOfLastEntry);
+
+  const totalPages = entries === "all" ? 1 : Math.ceil(filteredInvoices.length / entries);
 
   return (
     <div className="h-screen bg-fuchsia-200">
@@ -46,25 +93,38 @@ function AllInvoices() {
           </div>
         </div>
 
-        {/* Pass `entries` as a prop to ApprovedTable */}
-        <AllInvoicesTable entries={entries} search={search} />
+        {/* Invoices Table */}
+        <AllInvoicesTable invoices={currentEntries} />
 
+        {/* Pagination Controls */}
         <div className="flex justify-between items-center text-sm mt-4">
-          <p className="text-black">Showing 0 to 0 of 0 entries</p>
+          <p className="text-black">
+            Showing {filteredInvoices.length > 0 ? indexOfFirstEntry + 1 : 0} to{" "}
+            {Math.min(indexOfLastEntry, filteredInvoices.length)} of {filteredInvoices.length} entries
+          </p>
           <div className="flex gap-4">
-            <p className="cursor-pointer text-gray-500 hover:underline">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="cursor-pointer text-gray-500 hover:underline disabled:text-gray-300"
+            >
               Previous
-            </p>
-            <p className="cursor-pointer text-gray-500 hover:underline">Next</p>
+            </button>
+            <button
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="cursor-pointer text-gray-500 hover:underline disabled:text-gray-300"
+            >
+              Next
+            </button>
           </div>
         </div>
       </div>
 
-       {/* Footer Section */}
-       <footer className="fixed bottom-0 w-full bg-white text-gray-600 text-base p-4">
+      {/* Footer Section */}
+      <footer className="fixed bottom-0 w-full bg-white text-gray-600 text-base p-4">
         <span className="font-bold">Copyright © 2025.</span> All rights reserved.
       </footer>
-      
     </div>
   );
 }
