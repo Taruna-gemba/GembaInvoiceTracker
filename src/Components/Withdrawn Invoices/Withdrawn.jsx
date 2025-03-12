@@ -12,12 +12,15 @@ function Withdrawn() {
   };
 
   return (
-    <div className="h-screen bg-fuchsia-200">
+    <div className="flex flex-col min-h-screen bg-fuchsia-200">
+      {/* Header */}
       <h1 className="text-2xl p-4">Withdraw Invoices From GA</h1>
-      <div className="bg-white rounded-md border-t-4 border-t-fuchsia-700 mx-4 my-6 p-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+
+      {/* Main Content */}
+      <div className=" bg-white rounded-md border-t-4 border-t-fuchsia-700 mx-4 my-6 p-6">
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
           {/* Dropdown Box */}
-          <div className="flex items-center gap-2 text-sm">
+          <div className="flex items-center gap-2 ">
             <label className="text-gray-700 font-bold">Show</label>
             <select
               className="border rounded-sm text-gray-700 p-1"
@@ -49,6 +52,7 @@ function Withdrawn() {
         {/* Pass `entries` as a prop to WithdrawnTable */}
         <WithdrawnTable entries={entries} search={search} />
 
+        {/* Pagination */}
         <div className="flex justify-between items-center text-sm mt-4">
           <p className="text-black">Showing 0 to 0 of 0 entries</p>
           <div className="flex gap-4">
@@ -60,11 +64,10 @@ function Withdrawn() {
         </div>
       </div>
 
-       {/* Footer Section */}
-       <footer className="fixed bottom-0 w-full bg-white text-gray-600 text-base p-4">
+      {/* Responsive Footer */}
+      <footer className="mt-auto bg-white text-gray-600 md:text-base text-sm p-4 w-full">
         <span className="font-bold">Copyright © 2025.</span> All rights reserved.
       </footer>
-      
     </div>
   );
 }

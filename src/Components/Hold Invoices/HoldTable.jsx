@@ -2,32 +2,7 @@ import { useState } from "react";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 
 function HoldTable() {
-  const [data, setData] = useState([
-    {
-      id: "UID001",
-      vendorCode: "VND123",
-      companyName: "ABC Corp",
-      invoiceNo: "INV001",
-      soPoNo: "PO12345",
-      docDate: "2025-03-10",
-      invoiceDate: "2025-03-08",
-      geography: "USA",
-      amount: 1200,
-      status: "Pending",
-    },
-    {
-      id: "UID002",
-      vendorCode: "VND456",
-      companyName: "XYZ Ltd",
-      invoiceNo: "INV002",
-      soPoNo: "SO67890",
-      docDate: "2025-03-09",
-      invoiceDate: "2025-03-07",
-      geography: "Europe",
-      amount: 2500,
-      status: "Approved",
-    },
-  ]);
+  const [data, setData] = useState([]);
 
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
@@ -101,7 +76,7 @@ function HoldTable() {
                   <td className="p-3">{item.docDate}</td>
                   <td className="p-3">{item.invoiceDate}</td>
                   <td className="p-3">{item.geography}</td>
-                  <td className="p-3">${item.amount.toLocaleString()}</td>
+                  <td className="p-3">{item.amount.toLocaleString()}</td>
                   <td className="p-3">
                     <span
                       className={`px-3 py-1 rounded text-white ${

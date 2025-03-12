@@ -14,9 +14,7 @@ function AllInvoices() {
       try {
         const response = await fetch("http://localhost:4000/api/invoices"); // Replace with actual API
         const data = await response.json();
-
         console.log("Fetched Invoices:", data); // Debugging: Check API response
-
         const invoiceList = Array.isArray(data) ? data : data.data || [];
         setInvoices(invoiceList);
         setFilteredInvoices(invoiceList);
@@ -59,12 +57,15 @@ function AllInvoices() {
   const totalPages = entries === "all" ? 1 : Math.ceil(filteredInvoices.length / entries);
 
   return (
-    <div className="h-screen bg-fuchsia-200">
+    <div className="flex flex-col min-h-screen bg-fuchsia-200">
+      {/* Header */}
       <h1 className="text-2xl p-4">All Invoices</h1>
-      <div className="bg-white rounded-md border-t-4 border-t-fuchsia-700 mx-4 my-6 p-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+
+      {/* Main Content */}
+      <div className=" bg-white rounded-md border-t-4 border-t-fuchsia-700 mx-4 my-6 p-6">
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
           {/* Dropdown Box */}
-          <div className="flex items-center gap-2 text-sm">
+          <div className="flex items-center gap-2 ">
             <label className="text-gray-700 font-bold">Show</label>
             <select
               className="border rounded-sm text-gray-700 p-1"
@@ -121,8 +122,8 @@ function AllInvoices() {
         </div>
       </div>
 
-      {/* Footer Section */}
-      <footer className="fixed bottom-0 w-full bg-white text-gray-600 text-base p-4">
+      {/* Responsive Footer */}
+      <footer className="mt-auto bg-white text-gray-600 md:text-base text-sm p-4 w-full">
         <span className="font-bold">Copyright © 2025.</span> All rights reserved.
       </footer>
     </div>

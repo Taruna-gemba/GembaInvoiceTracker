@@ -54,11 +54,11 @@ function Approved() {
   const totalPages = entries === "all" ? 1 : Math.ceil(filteredInvoices.length / entries);
 
   return (
-    <div className="h-screen bg-fuchsia-200">
+    <div className="flex flex-col min-h-screen bg-fuchsia-200">
       <h1 className="text-2xl p-4">Approved Invoices</h1>
       <div className="bg-white rounded-md border-t-4 border-t-fuchsia-700 mx-4 my-6 p-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 text-sm">
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
+          <div className="flex items-center gap-2 ">
             <label className="text-gray-700 font-bold">Show</label>
             <select
               className="border rounded-sm text-gray-700 p-1"
@@ -121,7 +121,7 @@ function Approved() {
       </div>
 
        {/* Footer Section */}
-       <footer className="fixed bottom-0 w-full bg-white text-gray-600 text-base p-4">
+       <footer className="mt-auto w-full bg-white text-gray-600 text-sm md:text-base p-4">
         <span className="font-bold">Copyright © 2025.</span> All rights reserved.
       </footer>
       
