@@ -107,7 +107,7 @@ const WithdrawnTable = ( { invoices = [] } ) => {
             ) : (
               <tr>
                 <td colSpan="15" className="p-3 text-center text-gray-500">
-                  No pending invoices found
+                  No withdrawn invoices found
                 </td>
               </tr>
             )}
