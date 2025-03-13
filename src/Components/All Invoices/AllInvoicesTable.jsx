@@ -9,8 +9,10 @@ const AllInvoicesTable = ({ invoices }) => {
     if (!sortConfig.key) return invoices;
 
     return [...invoices].sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === "asc" ? -1 : 1;
-      if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === "asc" ? 1 : -1;
+      if (a[sortConfig.key] < b[sortConfig.key])
+        return sortConfig.direction === "asc" ? -1 : 1;
+      if (a[sortConfig.key] > b[sortConfig.key])
+        return sortConfig.direction === "asc" ? 1 : -1;
       return 0;
     });
   }, [invoices, sortConfig]);
@@ -70,21 +72,40 @@ const AllInvoicesTable = ({ invoices }) => {
           <tbody>
             {sortedData.length > 0 ? (
               sortedData.map((item, index) => (
-                <tr key={index} className="border-b hover:bg-gray-50 text-sm text-gray-700">
+                <tr
+                  key={index}
+                  className="border-b hover:bg-gray-50 text-sm text-gray-700"
+                >
                   <td className="p-3">{item.id}</td>
                   <td className="p-3">{item.vendor_id}</td>
                   <td className="p-3">{item.contact_person}</td>
                   <td className="p-3">{item.contact_no}</td>
                   <td className="p-3">{item.invoice_number}</td>
                   <td className="p-3">{item.PurchaseOrder}</td>
-                  <td className="p-3">{new Date(item.created_at).toLocaleDateString()}</td>
-                  <td className="p-3">{new Date(item.invoice_date).toLocaleDateString()}</td>
+                  <td className="p-3">
+                    {new Date(item.created_at).toLocaleDateString()}
+                  </td>
+                  <td className="p-3">
+                    {new Date(item.invoice_date).toLocaleDateString()}
+                  </td>
                   <td className="p-3">{item.state}</td>
                   <td className="p-3">{Number(item.total).toLocaleString()}</td>
                   <td className="p-3">
                     <span
                       className={`px-3 py-1 rounded text-white ${
-                        item.status === "Approved" ? "bg-green-500" : "bg-yellow-500"
+                        item.status === "Pending"
+                          ? "bg-yellow-500" 
+                          : item.status === "Approved"
+                          ? "bg-green-500" 
+                          : item.status === "Rejected"
+                          ? "bg-red-500" 
+                          : item.status === "Withdrawn"
+                          ? "bg-blue-500"
+                          : item.status === "Hold"
+                          ? "bg-orange-500" 
+                          : item.status === "Completed"
+                          ? "bg-purple-500"
+                          : "bg-gray-500" 
                       }`}
                     >
                       {item.status}

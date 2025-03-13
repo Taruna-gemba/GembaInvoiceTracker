@@ -10,27 +10,26 @@ function Hold() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-
-   useEffect(() => {
-      setLoading(true);
-      fetch("http://localhost:4000/api/invoices")
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setData(data);
-          setFilteredInvoices(data); // Initialize filteredInvoices
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Fetching error:", error);
-          setError(error.message);
-          setLoading(false);
-        });
-    }, []);
+  useEffect(() => {
+    setLoading(true);
+    fetch("http://localhost:4000/api/invoices")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+        setFilteredInvoices(data); // Initialize filteredInvoices
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Fetching error:", error);
+        setError(error.message);
+        setLoading(false);
+      });
+  }, []);
 
   // Filtering logic based on search
   useEffect(() => {
@@ -39,8 +38,14 @@ function Hold() {
     setFilteredInvoices(
       data.filter(
         (invoice) =>
-          invoice.vendor_id?.toString().toLowerCase().includes(search.toLowerCase()) ||
-          invoice.invoice_number?.toString().toLowerCase().includes(search.toLowerCase()) ||
+          invoice.vendor_id
+            ?.toString()
+            .toLowerCase()
+            .includes(search.toLowerCase()) ||
+          invoice.invoice_number
+            ?.toString()
+            .toLowerCase()
+            .includes(search.toLowerCase()) ||
           invoice.status?.toLowerCase().includes(search.toLowerCase())
       )
     );
@@ -50,9 +55,11 @@ function Hold() {
   const indexOfLastEntry = currentPage * entries;
   const indexOfFirstEntry = indexOfLastEntry - entries;
   const currentInvoices =
-    entries === "all" ? filteredInvoices : filteredInvoices.slice(indexOfFirstEntry, indexOfLastEntry);
-  const totalPages = entries === "all" ? 1 : Math.ceil(filteredInvoices.length / entries);
-
+    entries === "all"
+      ? filteredInvoices
+      : filteredInvoices.slice(indexOfFirstEntry, indexOfLastEntry);
+  const totalPages =
+    entries === "all" ? 1 : Math.ceil(filteredInvoices.length / entries);
 
   return (
     <div className="flex flex-col min-h-screen bg-fuchsia-200">
@@ -66,7 +73,9 @@ function Hold() {
               className="border rounded-sm text-gray-700 p-1"
               value={entries}
               onChange={(e) =>
-                setEntries(e.target.value === "all" ? "all" : Number(e.target.value))
+                setEntries(
+                  e.target.value === "all" ? "all" : Number(e.target.value)
+                )
               }
             >
               <option value="all">All</option>
@@ -94,15 +103,21 @@ function Hold() {
         ) : error ? (
           <p className="text-center text-red-500 mt-4">{error}</p>
         ) : (
-       <HoldTable invoices={currentInvoices} />
+          <HoldTable invoices={currentInvoices} />
         )}
 
-         {/* Pagination Controls */}
-         <div className="flex justify-between items-center text-sm mt-4">
+        {/* Pagination Controls */}
+        <div className="flex justify-between items-center text-sm mt-4">
+        
           <p className="text-black">
-            Showing {filteredInvoices.length > 0 ? indexOfFirstEntry + 1 : 0} to{" "}
-            {Math.min(indexOfLastEntry, filteredInvoices.length)} of {filteredInvoices.length} entries
+            {filteredInvoices.length === 0
+              ? "0 entries"
+              : `Showing ${indexOfFirstEntry + 1} to ${Math.min(
+                  indexOfLastEntry,
+                  filteredInvoices.length
+                )} of ${filteredInvoices.length} entries`}
           </p>
+
           <div className="flex gap-4">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -112,7 +127,9 @@ function Hold() {
               Previous
             </button>
             <button
-              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
               disabled={currentPage === totalPages}
               className="cursor-pointer text-gray-500 hover:underline disabled:text-gray-300"
             >
@@ -121,12 +138,12 @@ function Hold() {
           </div>
         </div>
       </div>
-      
+
       {/* Footer Section */}
       <footer className="mt-auto w-full bg-white text-gray-600 text-sm md:text-base p-4">
-        <span className="font-bold">Copyright © 2025.</span> All rights reserved.
+        <span className="font-bold">Copyright © 2025.</span> All rights
+        reserved.
       </footer>
-
     </div>
   );
 }

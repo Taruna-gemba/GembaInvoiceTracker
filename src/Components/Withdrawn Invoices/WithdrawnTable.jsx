@@ -5,23 +5,23 @@ const WithdrawnTable = ( { invoices = [] } ) => {
    const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
  
    // Ensure invoices is always an array before filtering
-  const pendingInvoices = useMemo(() => {
+  const withdrawnInvoices = useMemo(() => {
     if (!Array.isArray(invoices)) return [];  // Prevent errors
-    return invoices.filter((invoice) => invoice.status === "Pending");
+    return invoices.filter((invoice) => invoice.status === "Withdrawn");
   }, [invoices]);
 
   // Sorting logic
   const sortedData = useMemo(() => {
-    if (!Array.isArray(pendingInvoices) || pendingInvoices.length === 0) return [];
+    if (!Array.isArray(withdrawnInvoices) || withdrawnInvoices.length === 0) return [];
 
-    if (!sortConfig.key) return pendingInvoices;
+    if (!sortConfig.key) return withdrawnInvoices;
 
-    return [...pendingInvoices].sort((a, b) => {
+    return [...withdrawnInvoices].sort((a, b) => {
       if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === "asc" ? -1 : 1;
       if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === "asc" ? 1 : -1;
       return 0;
     });
-  }, [pendingInvoices, sortConfig]);
+  }, [withdrawnInvoices, sortConfig]);
 
   const handleSort = (key) => {
     setSortConfig((prev) => ({
